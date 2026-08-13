@@ -2,7 +2,7 @@
 
 ## Introdução
 
-Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawing-board) por jimmyurl, de acordo com as suguestões de cliente de Victor Mateus Severo Ferrero, como parte da disciplina de Desenvolvimento de Software para Web (ELC1090), ministrada pela dra. Andrea Schwertner Charão, na Universidade Federal de Santa Maria (UFSM).
+Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawing-board) por jimmyurl, de acordo com as suguestões de cliente de Victor Mateus Severo Ferrero (vmferreira@inf.ufsm.br), como parte da disciplina de Desenvolvimento de Software para Web (ELC1090), ministrada pela dra. Andrea Schwertner Charão, na Universidade Federal de Santa Maria (UFSM).
 
 ## Exigências do cliente
 
@@ -15,3 +15,8 @@ Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawin
 ## Fontes
 
 https://github.com/jimmyurl/drawing-board
+
+## E-mail para contato
+
+- misilva@inf.ufsm.br
+- miguelmironsilva@gmail.com
