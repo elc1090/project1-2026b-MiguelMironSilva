@@ -1,0 +1,59 @@
+/* i18n.css
+   Floating EN / SW language switch.
+   Self-contained and positioned with `fixed`, so it sits on top of the
+   existing layout without changing any spacing, colors, or sizing
+   defined in style.css. */
+
+   .lang-toggle {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 1000;
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(20, 20, 20, 0.55);
+    border-radius: 999px;
+    backdrop-filter: blur(4px);
+    font-family: sans-serif;
+  }
+  
+  .lang-btn {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  
+  .lang-btn.active {
+    background: #fff;
+    color: #1c1c1e;
+  }
+  
+  .lang-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  
+  .lang-btn:focus-visible {
+    outline: 2px solid #ffc93c;
+    outline-offset: 2px;
+  }
+  
+  @media (max-width: 480px) {
+    .lang-toggle {
+      top: 8px;
+      right: 8px;
+    }
+  
+    .lang-btn {
+      font-size: 0.7rem;
+      padding: 5px 10px;
+    }
+  }
