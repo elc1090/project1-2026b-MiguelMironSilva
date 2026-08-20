@@ -12,6 +12,11 @@ Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawin
 - Ferramenta de Spray
 - Ferramenta de seleção que possibilita mover, rotacionar, escalar partes da imagem
 
+## Melhoras adicionais
+
+- Adicionar o português como uma língua adicional (ou mudar a opção de suaíli para português)
+- Consertar as funções de linha ("Line") e Random Draw, que no momento só desenham triângulos
+
 ## Fontes
 
 - https://github.com/jimmyurl/drawing-board
