@@ -21,6 +21,7 @@
         fillColor: "Fill color",
         brush: "Brush",
         eraser: "Eraser",
+        spray: "Spray",
         clearCanvas: "Clear Workspace",
         saveImg: "Save As Image",
         installApp: "Install App",
@@ -39,23 +40,43 @@
         fillColor: "Jaza Rangi",
         brush: "Burashi",
         eraser: "Kifutio",
+        spray: "Nyunyiza",
         clearCanvas: "Futa Ubao",
         saveImg: "Hifadhi Kama Picha",
         installApp: "Sakinisha Programu",
+      },
+      pt: {
+        pageTitle: "App de Desenho",
+        tools: "FERRAMENTAS",
+        shapes: "Shapes",
+        options: "Options",
+        colors: "Colors",
+        rectangle: "Rectangle",
+        circle: "Circle",
+        triangle: "Triangle",
+        line: "Line",
+        randomDraw: "Random Draw",
+        fillColor: "Fill color",
+        brush: "Brush",
+        eraser: "Eraser",
+        spray: "Spray",
+        clearCanvas: "Clear Workspace",
+        saveImg: "Save As Image",
+        installApp: "Install App",
       },
     };
   
     // If a school hasn't picked a language yet, default based on the
     // browser/device language - otherwise fall back to Kiswahili.
     function detectDefaultLang() {
-      const nav = (navigator.language || navigator.userLanguage || "sw").toLowerCase();
-      return nav.startsWith("en") ? "en" : "sw";
+      const nav = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+      return nav.startsWith("en") ? "en" : "sw": "pt";
     }
   
     function getSavedLang() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        return saved === "en" || saved === "sw" ? saved : null;
+        return saved === "en" || saved === "sw" || saved === "pt" ? saved : null;
       } catch (err) {
         return null;
       }
@@ -71,7 +92,7 @@
     }
   
     function applyLanguage(lang) {
-      const dict = translations[lang] || translations.sw;
+      const dict = translations[lang] || translations.en;
   
       document.documentElement.lang = lang;
       document.title = dict.pageTitle;
