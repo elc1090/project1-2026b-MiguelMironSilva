@@ -15,7 +15,7 @@ Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawin
 ## Melhoras adicionais
 
 - Adicionar o português como uma língua adicional (ou mudar a opção de suaíli para português)
-- Consertar as funções de linha ("Line") e Random Draw, que no momento só desenham triângulos
+- Consertar as funções de linha ("Line") e Desenho Aleatório ("Random Draw"), que no momento só desenham triângulos
 
 ## Fontes
 
