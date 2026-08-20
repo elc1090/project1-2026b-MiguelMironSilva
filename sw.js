@@ -29,6 +29,7 @@ const ASSETS_TO_CACHE = [
   "./icons/polygone.svg",
   "./icons/brush.svg",
   "./icons/eraser.svg",
+  "./icons/spray.svg",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png",
