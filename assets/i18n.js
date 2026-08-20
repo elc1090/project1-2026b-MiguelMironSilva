@@ -1,5 +1,6 @@
 // i18n.js
 // Adds an English / Kiswahili toggle to the Drawing Board app.
+// Opção de Suaíli mudada para Português
 // Works entirely through [data-i18n] / [data-i18n-alt] attributes,
 // so it never touches script.js or style.css.
 
@@ -50,21 +51,21 @@
       pt: {
         pageTitle: "App de Desenho",
         tools: "FERRAMENTAS",
-        shapes: "Shapes",
-        options: "Options",
-        colors: "Colors",
-        rectangle: "Rectangle",
-        circle: "Circle",
-        triangle: "Triangle",
-        line: "Line",
-        randomDraw: "Random Draw",
-        fillColor: "Fill color",
-        brush: "Brush",
-        eraser: "Eraser",
+        shapes: "Formas",
+        options: "Opções",
+        colors: "Cores",
+        rectangle: "Retângulo",
+        circle: "Círculo",
+        triangle: "Triângulo",
+        line: "Linha",
+        randomDraw: "Desenho Aleatório",
+        fillColor: "Preencher com Cor",
+        brush: "Pincel",
+        eraser: "Borracha",
         spray: "Spray",
-        clearCanvas: "Clear Workspace",
-        saveImg: "Save As Image",
-        installApp: "Install App",
+        clearCanvas: "Limpar Desenho",
+        saveImg: "Salvar Como Imagem",
+        installApp: "Instalar App",
       },
     };
   
