@@ -26,6 +26,7 @@
         saveImg: "Save As Image",
         installApp: "Install App",
       },
+     /*
       sw: {
         pageTitle: "Programu ya Kuchora",
         tools: "ZANA",
@@ -45,6 +46,7 @@
         saveImg: "Hifadhi Kama Picha",
         installApp: "Sakinisha Programu",
       },
+      */
       pt: {
         pageTitle: "App de Desenho",
         tools: "FERRAMENTAS",
@@ -70,13 +72,13 @@
     // browser/device language - otherwise fall back to Kiswahili.
     function detectDefaultLang() {
       const nav = (navigator.language || navigator.userLanguage || "en").toLowerCase();
-      return nav.startsWith("en") ? "en" : "sw": "pt";
+      return nav.startsWith("en") ? "en" : "pt";
     }
   
     function getSavedLang() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        return saved === "en" || saved === "sw" || saved === "pt" ? saved : null;
+        return saved === "en" || saved === "pt" ? saved : null;
       } catch (err) {
         return null;
       }
