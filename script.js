@@ -62,8 +62,35 @@ const startDraw = (e) => {
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
 };
 
+const sprayPaint = (e) => {
+    //Spray fica mais amplo e denso com amplitude do pincel maior
+    const sprayRadius = brushWidth * 1.5;
+    const density = brushWidth * 3;
+
+    ctx.fillStyle = selectedColor;
+
+    for(let i = 0; i < density; i++) {
+        const angle = Math.random() * Math.PI * 2;
+
+        // sqrt() uniformiza melhor a distribuição do spray
+        const distance = Math.sqrt(Math.random()) * sprayRadius;
+
+        const x = e.offsetX + Math.cos(angle) * distance;
+        const y = e.offsetY + Math.sin(angle) * distance;
+
+        ctx.fillRect(x, y, 1.5, 1.5);
+    }
+};
+
 const drawing = (e) => {
     if(!isDrawing) return;
+
+    //Spray tem que ficar antes do "putImageData" para poder acumular propriamente
+    if(selectedTool === "spray") {
+        sprayPaint(e);
+        return;
+    }
+        
     ctx.putImageData(snapshot, 0, 0);
 
     if(selectedTool === "brush" || selectedTool === "eraser") {
@@ -74,6 +101,8 @@ const drawing = (e) => {
         drawRect(e);
     } else if(selectedTool === "circle"){
         drawCircle(e);
+    } else if(selectedTool === "triangle"){
+        drawTriangle(e);
     } else {
         drawTriangle(e);
     }
