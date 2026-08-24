@@ -50,6 +50,14 @@ const drawTriangle = (e) => {
     fillColor.checked ? ctx.fill() : ctx.stroke();
 };
 
+//Implementação do desenho por linha
+const drawLine = (e) => {
+    ctx.beginPath();
+    ctx.moveTo(prevMouseX, prevMouseY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+};
+
 const startDraw = (e) => {
     isDrawing = true;
     hasDrawn = true; // Set to true when user starts drawing
@@ -103,6 +111,8 @@ const drawing = (e) => {
         drawCircle(e);
     } else if(selectedTool === "triangle"){
         drawTriangle(e);
+    } else if(selectedTool === "line") {
+        drawLine(e);
     } else {
         drawTriangle(e);
     }
