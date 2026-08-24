@@ -27,27 +27,6 @@
         saveImg: "Save As Image",
         installApp: "Install App",
       },
-     /*
-      sw: {
-        pageTitle: "Programu ya Kuchora",
-        tools: "ZANA",
-        shapes: "Maumbo",
-        options: "Chaguo",
-        colors: "Rangi",
-        rectangle: "Mstatili",
-        circle: "Duara",
-        triangle: "Pembetatu",
-        line: "Mstari",
-        randomDraw: "Bahati Nasibu",
-        fillColor: "Jaza Rangi",
-        brush: "Burashi",
-        eraser: "Kifutio",
-        spray: "Nyunyiza",
-        clearCanvas: "Futa Ubao",
-        saveImg: "Hifadhi Kama Picha",
-        installApp: "Sakinisha Programu",
-      },
-      */
       pt: {
         pageTitle: "App de Desenho",
         tools: "FERRAMENTAS",
@@ -70,10 +49,10 @@
     };
   
     // If a school hasn't picked a language yet, default based on the
-    // browser/device language - otherwise fall back to Kiswahili.
+    // browser/device language - otherwise fall back to English.
     function detectDefaultLang() {
       const nav = (navigator.language || navigator.userLanguage || "en").toLowerCase();
-      return nav.startsWith("en") ? "en" : "pt";
+      return nav.startsWith("en") ? "pt" : "en";
     }
   
     function getSavedLang() {
@@ -95,7 +74,7 @@
     }
   
     function applyLanguage(lang) {
-      const dict = translations[lang] || translations.en;
+      const dict = translations[lang] || translations.pt; //talvez seja aqui que não funciona?
   
       document.documentElement.lang = lang;
       document.title = dict.pageTitle;
