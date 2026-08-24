@@ -15,6 +15,9 @@ selectedTool = "brush",
 brushWidth = 5,
 selectedColor = "#000";
 
+//Armazenamento de pontos aleatórios
+let randomPoints = [];
+
 const setCanvasBackground = () => {
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -26,6 +29,37 @@ window.addEventListener("load", () => {
     canvas.height = canvas.offsetHeight;
     setCanvasBackground();
 });
+
+//Para gerar coordenadas normalizadas entre 0 e 1
+//Gera pontos ao redor de um centro comum
+//Randomiza as vertices geradas
+const generateRandomPoints = () => {
+    randomPoints = [];
+
+    //entre cinco e dez vértices
+    const pointCount =
+        Math.floor(Math.random() * 6) + 5;
+
+    for(let i = 0; i < pointCount; i++) {
+
+        const baseAngle =
+            (Math.PI * 2 * i) / pointCount;
+
+        const angleVariation =
+            (Math.random() - 0.5) * 0.3;
+
+        const angle =
+            baseAngle + angleVariation;
+
+        const radius =
+            0.3 + Math.random() * 0.2;
+
+        randomPoints.push({
+            x: 0.5 + Math.cos(angle) * radius,
+            y: 0.5 + Math.sin(angle) * radius
+        });
+    }
+};
 
 const drawRect = (e) => {
     if(!fillColor.checked) {
@@ -68,6 +102,11 @@ const startDraw = (e) => {
     ctx.strokeStyle = selectedColor;
     ctx.fillStyle = selectedColor;
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    //Gera os pontos uma única vez quando o usuário começa a desenhar
+    if(selectedTool === "random-draw") {
+        generateRandomPoints();
+    }
 };
 
 const sprayPaint = (e) => {
@@ -88,6 +127,38 @@ const sprayPaint = (e) => {
 
         ctx.fillRect(x, y, 1.5, 1.5);
     }
+};
+
+const drawRandom = (e) => {
+    const width = e.offsetX - prevMouseX;
+    const height = e.offsetY - prevMouseY;
+
+    ctx.beginPath();
+
+    const firstX =
+        prevMouseX + randomPoints[0].x * width;
+
+    const firstY =
+        prevMouseY + randomPoints[0].y * height;
+
+    ctx.moveTo(firstX, firstY);
+
+    for(let i = 1; i < randomPoints.length; i++) {
+
+        const x =
+            prevMouseX + randomPoints[i].x * width;
+
+        const y =
+            prevMouseY + randomPoints[i].y * height;
+
+        ctx.lineTo(x, y);
+    }
+
+    ctx.closePath();
+
+    fillColor.checked
+        ? ctx.fill()
+        : ctx.stroke();
 };
 
 const drawing = (e) => {
@@ -113,6 +184,8 @@ const drawing = (e) => {
         drawTriangle(e);
     } else if(selectedTool === "line") {
         drawLine(e);
+    } else if(selectedTool === "randomDraw") {
+        drawRandom(e);
     } else {
         drawTriangle(e);
     }
