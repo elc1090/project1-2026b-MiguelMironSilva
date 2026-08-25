@@ -19,7 +19,12 @@ Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawin
 
 ## Fontes
 
+### Programa Original
 - https://github.com/jimmyurl/drawing-board
+### Imagem de fundo
+https://www.magnific.com/vectors/techno-lines-background
+### Novos ícones svg
+https://claude.ai/
 
 ## E-mail para contato
 
