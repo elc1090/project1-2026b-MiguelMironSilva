@@ -168,6 +168,39 @@ const drawLine = (e) => {
     ctx.stroke();
 };
 
+//Implementação da função geradora de polígono
+const drawPolygon = (e) => {
+    const sides = Math.max(3, Number(polygonSidesInput.value));
+    const centerX = prevMouseX;
+    const centerY = prevMouseY;
+
+    const radius = Math.sqrt(
+        Math.pow(e.offsetX - centerX, 2) +
+        Math.pow(e.offsetY - centerY, 2)
+    );
+
+    const angleStep =
+        (Math.PI * 2) / sides;
+
+    ctx.beginPath();
+
+    for(let i = 0; i < sides; i++) {
+        const angle = -Math.PI / 2 + i * angleStep;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        
+        if(i === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    }
+
+    ctx.closePath();
+
+    fillColor.checked ? ctx.fill() : ctx.stroke();
+};
+
 const startDraw = (e) => {
     isDrawing = true;
     hasDrawn = true; // Set to true when user starts drawing
@@ -262,6 +295,8 @@ const drawing = (e) => {
         drawLine(e);
     } else if(selectedTool === "random-draw") {
         drawRandom(e);
+    } else if(selectedTool === "polygon") {
+        drawPolygon(e);
     } else {
         drawTriangle(e);
     }
