@@ -3,7 +3,17 @@ toolBtns = document.querySelectorAll(".tool"),
 fillColor = document.querySelector("#fill-color"),
 sizeSlider = document.querySelector("#size-slider"),
 colorBtns = document.querySelectorAll(".colors .option"),
-colorPicker = document.querySelector("#color-picker"),
+//colorPicker = document.querySelector("#color-picker"),
+customColorButton = document.querySelector("#custom-color-button"),
+hsvPicker = document.querySelector("#hsv-picker"),
+hueSlider = document.querySelector("#hue-slider"),
+saturationSlider = document.querySelector("#saturation-slider"),
+valueSlider = document.querySelector("#value-slider"),
+hueValue = document.querySelector("#hue-value"),
+saturationValue = document.querySelector("#saturation-value"),
+valueValue = document.querySelector("#value-value"),
+hsvPreview = document.querySelector("#hsv-preview"),
+resetColor = document.querySelector("#reset-color"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
 ctx = canvas.getContext("2d");
@@ -59,6 +69,72 @@ const generateRandomPoints = () => {
             y: 0.5 + Math.sin(angle) * radius
         });
     }
+};
+
+//Conversor de HSV para RGB
+const hsvToRgb = (h, s, v) => {
+    s /= 100;
+    v /= 100;
+
+    const c = v * s;
+    const x = c * (
+        1 - Math.abs(((h / 60) % 2) - 1)
+    );
+    const m = v - c;
+
+    let r = 0;
+    let g = 0;
+    let b = 0;
+
+    if(h < 60) {
+        r = c;
+        g = x;
+    } else if(h < 120) {
+        r = x;
+        g = c;
+    } else if(h < 180) {
+        g = c;
+        b = x;
+    } else if(h < 240) {
+        g = x;
+        b = c;
+    } else if(h < 300) {
+        r = x;
+        b = c;
+    } else {
+        r = c;
+        b = x;
+    }
+
+    r = Math.round((r + m) * 255);
+    g = Math.round((g + m) * 255);
+    b = Math.round((b + m) * 255);
+
+    return `rgb(${r}, ${g}, ${b})`;
+};
+
+//Atualiza a cor quando os sliders se movem
+const updateHSVColor = () => {
+    const h = Number(hueSlider.value);
+    const s = Number(saturationSlider.value);
+    const v = Number(valueSlider.value);
+
+    hueValue.textContent = `${h}°`;
+    saturationValue.textContent = `${s}%`;
+    valueValue.textContent = `${v}%`;
+
+    const color = hsvToRgb(h, s, v);
+
+    hsvPreview.style.backgroundColor = color;
+    customColorButton.style.backgroundColor = color;
+
+    selectedColor = color;
+
+    document
+        .querySelector(".colors .selected")
+        ?.classList.remove("selected");
+
+    customColorButton.classList.add("selected");
 };
 
 const drawRect = (e) => {
@@ -203,16 +279,72 @@ sizeSlider.addEventListener("change", () => brushWidth = sizeSlider.value);
 
 colorBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-        document.querySelector(".options .selected").classList.remove("selected");
+        document.querySelector(".colors .selected").classList.remove("selected");
         btn.classList.add("selected");
         selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
+
+        //exclui o botão customizado inicial do loop
+        const presetColorBtns = document.querySelectorAll(".colors .option:not(.custom-color)");
     });
 });
 
+//Fecha o slider de HSV quando os outros botôes são pressionados
+presetColorBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelector(".colors .selected")?.classList.remove("selected");
+        btn.classList.add("selected");
+        selectedColor = window.getComputedStyle(btn).backgroundColor;
+        hsvPicker.classList.remove("visible");
+    });
+});
+
+/*
 colorPicker.addEventListener("change", () => {
     colorPicker.parentElement.style.background = colorPicker.value;
     colorPicker.parentElement.click();
 });
+*/
+
+//Conecta todos os componentes do selecionador de HSV
+hueSlider.addEventListener("input", updateHSVColor);
+saturationSlider.addEventListener("input", updateHSVColor);
+valueSlider.addEventListener("input", updateHSVColor);
+
+//Abre o painel de HSV
+customColorButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    hsvPicker.classList.toggle("visible");
+    document.querySelector(".colors .selected")?.classList.remove("selected");
+    customColorButton.classList.add("selected");
+    selectedColor = window.getComputedStyle(customColorButton).backgroundColor;
+});
+
+//Reseta para o azul original com o botão Reset
+resetColor.addEventListener("click", () => {
+    const defaultColor =
+        customColorButton.dataset.defaultColor;
+
+    customColorButton.style.backgroundColor =
+        defaultColor;
+
+    hsvPreview.style.backgroundColor =
+        defaultColor;
+
+    selectedColor = defaultColor;
+
+    hueSlider.value = 211;
+    saturationSlider.value = 70;
+    valueSlider.value = 97;
+    
+    hueValue.textContent = "211°";
+    saturationValue.textContent = "70%";
+    valueValue.textContent = "97%";
+    
+    document.querySelector(".colors .selected")?.classList.remove("selected");
+    customColorButton.classList.add("selected");
+});
+
+
 
 clearCanvas.addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
