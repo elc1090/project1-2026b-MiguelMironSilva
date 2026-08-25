@@ -26,6 +26,7 @@
         clearCanvas: "Clear Workspace",
         saveImg: "Save As Image",
         installApp: "Install App",
+        resetColor: "Reset",
       },
       pt: {
         pageTitle: "App de Desenho",
@@ -45,6 +46,7 @@
         clearCanvas: "Limpar Desenho",
         saveImg: "Salvar Como Imagem",
         installApp: "Instalar App",
+        resetColor: "Restaurar",
       },
     };
   
@@ -52,7 +54,7 @@
     // browser/device language - otherwise fall back to English.
     function detectDefaultLang() {
       const nav = (navigator.language || navigator.userLanguage || "en").toLowerCase();
-      return nav.startsWith("en") ? "pt" : "en";
+      return nav.startsWith("pt") ? "pt" : "en";
     }
   
     function getSavedLang() {
