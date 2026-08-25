@@ -195,11 +195,7 @@ const updateHSVColor = () => {
     customColorButton.style.backgroundColor = color;
 
     selectedColor = color;
-
-    document
-        .querySelector(".colors .selected")
-        ?.classList.remove("selected");
-
+    document.querySelector(".colors .selected")?.classList.remove("selected");
     customColorButton.classList.add("selected");
 };
 
@@ -684,7 +680,6 @@ toolBtns.forEach(btn => {
         ) {
             commitSelection();
         }
-        
         document.querySelector(".options .active").classList.remove("active");
         btn.classList.add("active");
         selectedTool = btn.id;
