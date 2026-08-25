@@ -730,6 +730,7 @@ rotationInput.addEventListener(
         let angle = Number(rotationInput.value);
         if(Number.isNaN(angle)) return;
         angle = Math.min( 360, Math.max(0, angle));
+        rotationInput.value = angle;
         selection.rotation = angle;
         renderSelection();
     }
