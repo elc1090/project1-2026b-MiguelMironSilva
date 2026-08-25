@@ -30,7 +30,7 @@
       },
       pt: {
         pageTitle: "App de Desenho",
-        tools: "FERRAMENTAS",
+        tools: "OPÇÕES",
         shapes: "Formas",
         options: "Opções",
         colors: "Cores",
