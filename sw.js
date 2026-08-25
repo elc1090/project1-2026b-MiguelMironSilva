@@ -27,6 +27,7 @@ const ASSETS_TO_CACHE = [
   "./icons/triangle.svg",
   "./icons/line.svg",
   "./icons/polygone.svg",
+  "./icons/question_mark.svg",
   "./icons/brush.svg",
   "./icons/eraser.svg",
   "./icons/spray.svg",
