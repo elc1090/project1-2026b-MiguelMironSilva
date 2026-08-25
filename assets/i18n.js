@@ -84,7 +84,7 @@
     }
   
     function applyLanguage(lang) {
-      const dict = translations[lang] || translations.pt; //talvez seja aqui que não funciona?
+      const dict = translations[lang] || translations.pt;
   
       document.documentElement.lang = lang;
       document.title = dict.pageTitle;
