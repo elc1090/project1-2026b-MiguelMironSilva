@@ -28,7 +28,7 @@
         installApp: "Install App",
         resetColor: "Reset",
         polygon: "Polygon",
-        polygonSides: "Sides",
+        polygonSides: "Sides: ",
       },
       pt: {
         pageTitle: "App de Desenho",
@@ -50,7 +50,7 @@
         installApp: "Instalar App",
         resetColor: "Restaurar",
         polygon: "Polígono",
-        polygonSides: "Lados",
+        polygonSides: "Lados: ",
       },
     };
   
