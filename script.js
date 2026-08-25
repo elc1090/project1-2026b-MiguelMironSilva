@@ -288,6 +288,7 @@ const drawPolygon = (e) => {
 };
 
 const startDraw = (e) => {
+    const point = getCanvasCoordinates(e); //converte e para point
     saveState(); //Salva o desenho
     isDrawing = true;
     hasDrawn = true; // Set to true when user starts drawing
