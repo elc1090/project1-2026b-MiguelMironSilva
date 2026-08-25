@@ -185,6 +185,7 @@ section{
 .drawing-board{
   flex: 1;
   overflow: hidden;
+  border: 3px solid #4A98F7;
 }
 .drawing-board canvas{
   width: 100%;
