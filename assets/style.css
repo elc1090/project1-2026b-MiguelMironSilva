@@ -92,6 +92,50 @@ section{
 .colors .option:nth-child(5){
   background-color: #4A98F7;
 }
+.hsv-picker {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.hsv-picker.visible {
+    display: block;
+}
+
+.hsv-row {
+    display: grid;
+    grid-template-columns: 20px 1fr 45px;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.hsv-row input {
+    width: 100%;
+}
+
+.hsv-row span {
+    font-size: 12px;
+    color: #5A6168;
+}
+
+.hsv-preview {
+    height: 30px;
+    width: 100%;
+    border-radius: 4px;
+    margin: 8px 0;
+    background: #4A98F7;
+    border: 1px solid #ccc;
+}
+
+#reset-color {
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+}
 .colors .option.selected::before{
   position: absolute;
   content: "";
@@ -107,10 +151,12 @@ section{
 .colors .option:first-child.selected::before{
   border-color: #ccc;
 }
+/*
 .option #color-picker{
   opacity: 0;
   cursor: pointer;
 }
+*/
 .buttons button{
   width: 100%;
   color: #fff;
