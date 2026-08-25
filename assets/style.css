@@ -186,10 +186,14 @@ section{
     opacity: 0.45;
     cursor: not-allowed;
 }
-.butoons .reset-zoom{
+.buttons .reset-zoom{
   color: #6C757D;
   border: 1px solid #6C757D;
   transition: all 0.3s ease;
+}
+.buttons .reset-zoom:hover {
+    color: #fff;
+    background: #6C757D;
 }
 .buttons .clear-canvas{
   color: #6C757D;
