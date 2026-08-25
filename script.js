@@ -87,7 +87,7 @@ window.addEventListener("load", () => {
 const generateRandomPoints = () => {
     randomPoints = [];
 
-    //entre cinco e dez vértices
+    //entre quatro e catorze vértices
     const pointCount = Math.floor(Math.random() * 11) + 4;
     const rotation = Math.random() * Math.PI * 2;
     for(let i = 0; i < pointCount; i++) {
