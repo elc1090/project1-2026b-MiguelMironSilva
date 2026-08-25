@@ -32,6 +32,7 @@
         undo: "Undo",
         redo: "Redo",
         resetZoom: "Zoom 100%",
+        selection: "Selection",
       },
       pt: {
         pageTitle: "App de Desenho",
@@ -57,6 +58,7 @@
         undo: "Desfazer",
         redo: "Refazer",
         resetZoom: "Zoom 100%",
+        selection: "Seleção",
       },
     };
   
