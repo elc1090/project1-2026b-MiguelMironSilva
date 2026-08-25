@@ -29,6 +29,8 @@
         resetColor: "Reset",
         polygon: "Polygon",
         polygonSides: "Sides: ",
+        undo: "Undo",
+        redo: "Redo",
       },
       pt: {
         pageTitle: "App de Desenho",
@@ -51,6 +53,8 @@
         resetColor: "Restaurar",
         polygon: "Polígono",
         polygonSides: "Lados: ",
+        undo: "Desfazer",
+        redo: "Refazer",
       },
     };
   
