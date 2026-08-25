@@ -11,7 +11,7 @@ body{
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: url(paper.jpg);
+  background: url("paper.jpg");
 }
 .container{
   display: flex;
