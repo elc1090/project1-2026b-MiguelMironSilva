@@ -27,35 +27,6 @@
             <h1 class="title" data-i18n="tools">TOOLS</h1>
           <label class="title" data-i18n="shapes">Shapes</label>
           <ul class="options">
-            <!-- Componentes do slider de HSV -->
-            <div class="hsv-picker" id="hsv-picker">
-              <div class="hsv-row">
-                  <!-- Deslizador para a matiz -->
-                  <label for="hue-slider">H</label>
-                  <input type="range" id="hue-slider"
-                         min="0" max="360" value="211">
-                  <span id="hue-value">211°</span>
-              </div>
-              <div class="hsv-row">
-                <!-- Deslizador para a saturação -->
-                <label for="saturation-slider">S</label>
-                <input type="range" id="saturation-slider"
-                       min="0" max="100" value="70">
-                <span id="saturation-value">70%</span>
-              </div>
-              <div class="hsv-row">
-                <!-- Deslizador para o valor -->
-                <label for="value-slider">V</label>
-                <input type="range" id="value-slider"
-                       min="0" max="100" value="97">
-                <span id="value-value">97%</span>
-              </div>
-              <div class="hsv-preview" id="hsv-preview"></div>
-              <!-- Botão para resetar -->
-              <button type="button" id="reset-color">
-                Reset
-              </button>
-            </div>
             <li class="option tool" id="rectangle">
               <img src="icons/rectangle.svg" alt="Rectangle" data-i18n-alt="rectangle">
               <span data-i18n="rectangle">Rectangle</span>
@@ -109,10 +80,39 @@
             <li class="option selected"></li>
             <li class="option"></li>
             <li class="option"></li>
-            <!-- Cotão customizado para HSV explicitado -->
+            <!-- Botão de cor personalizada HSV -->
             <li class="option custom-color" id="custom-color-button" data-default-color="#4A98F7">
             </li>
           </ul>
+           <!-- Componentes do slider de HSV -->
+            <div class="hsv-picker" id="hsv-picker">
+              <div class="hsv-row">
+                  <!-- Deslizador para a matiz -->
+                  <label for="hue-slider">H</label>
+                  <input type="range" id="hue-slider"
+                         min="0" max="360" value="211">
+                  <span id="hue-value">211°</span>
+              </div>
+              <div class="hsv-row">
+                <!-- Deslizador para a saturação -->
+                <label for="saturation-slider">S</label>
+                <input type="range" id="saturation-slider"
+                       min="0" max="100" value="70">
+                <span id="saturation-value">70%</span>
+              </div>
+              <div class="hsv-row">
+                <!-- Deslizador para o valor -->
+                <label for="value-slider">V</label>
+                <input type="range" id="value-slider"
+                       min="0" max="100" value="97">
+                <span id="value-value">97%</span>
+              </div>
+              <div class="hsv-preview" id="hsv-preview"></div>
+              <!-- Botão para resetar -->
+              <button type="button" id="reset-color">
+                Reset
+              </button>
+            </div>
         </div>
         <div class="row buttons">
           <button class="clear-canvas" data-i18n="clearCanvas">Clear Workspace</button>
