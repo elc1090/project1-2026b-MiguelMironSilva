@@ -2,8 +2,8 @@ const canvas = document.querySelector("canvas"),
 toolBtns = document.querySelectorAll(".tool"),
 fillColor = document.querySelector("#fill-color"),
 sizeSlider = document.querySelector("#size-slider"),
-colorBtns = document.querySelectorAll(".colors .option"),
-//colorPicker = document.querySelector("#color-picker"),
+//esquema velho de ColorBtns retirado
+presetColorBtns = document.querySelectorAll(".colors .option:not(.custom-color)"),
 customColorButton = document.querySelector("#custom-color-button"),
 hsvPicker = document.querySelector("#hsv-picker"),
 hueSlider = document.querySelector("#hue-slider"),
@@ -260,7 +260,7 @@ const drawing = (e) => {
         drawTriangle(e);
     } else if(selectedTool === "line") {
         drawLine(e);
-    } else if(selectedTool === "random-Draw") {
+    } else if(selectedTool === "random-dfraw") {
         drawRandom(e);
     } else {
         drawTriangle(e);
@@ -277,18 +277,6 @@ toolBtns.forEach(btn => {
 
 sizeSlider.addEventListener("change", () => brushWidth = sizeSlider.value);
 
-colorBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        document.querySelector(".colors .selected").classList.remove("selected");
-        btn.classList.add("selected");
-        selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
-
-        //exclui o botão customizado inicial do loop
-        const presetColorBtns = document.querySelectorAll(".colors .option:not(.custom-color)");
-    });
-});
-
-//Fecha o slider de HSV quando os outros botôes são pressionados
 presetColorBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         document.querySelector(".colors .selected")?.classList.remove("selected");
@@ -297,13 +285,6 @@ presetColorBtns.forEach(btn => {
         hsvPicker.classList.remove("visible");
     });
 });
-
-/*
-colorPicker.addEventListener("change", () => {
-    colorPicker.parentElement.style.background = colorPicker.value;
-    colorPicker.parentElement.click();
-});
-*/
 
 //Conecta todos os componentes do selecionador de HSV
 hueSlider.addEventListener("input", updateHSVColor);
@@ -332,19 +313,17 @@ resetColor.addEventListener("click", () => {
 
     selectedColor = defaultColor;
 
-    hueSlider.value = 211;
+    hueSlider.value = 213;
     saturationSlider.value = 70;
     valueSlider.value = 97;
     
-    hueValue.textContent = "211°";
+    hueValue.textContent = "213°";
     saturationValue.textContent = "70%";
     valueValue.textContent = "97%";
     
     document.querySelector(".colors .selected")?.classList.remove("selected");
     customColorButton.classList.add("selected");
 });
-
-
 
 clearCanvas.addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -365,4 +344,4 @@ saveImg.addEventListener("click", () => {
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
-canvas.addEventListener("mouseup", () => isDrawing = false);
+canvas.addEventListener("mouseleave", () => { isDrawing = false; });
