@@ -27,6 +27,8 @@
         saveImg: "Save As Image",
         installApp: "Install App",
         resetColor: "Reset",
+        polygon: "Polygon",
+        polygonSides: "Sides",
       },
       pt: {
         pageTitle: "App de Desenho",
@@ -47,6 +49,8 @@
         saveImg: "Salvar Como Imagem",
         installApp: "Instalar App",
         resetColor: "Restaurar",
+        polygon: "Polígono",
+        polygonSides: "Lados",
       },
     };
   
