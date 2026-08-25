@@ -344,4 +344,5 @@ saveImg.addEventListener("click", () => {
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
+canvas.addEventListener("mouseup", () => { isDrawing = false; });
 canvas.addEventListener("mouseleave", () => { isDrawing = false; });
