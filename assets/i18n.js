@@ -31,6 +31,7 @@
         polygonSides: "Sides: ",
         undo: "Undo",
         redo: "Redo",
+        resetZoom: "Zoom 100%",
       },
       pt: {
         pageTitle: "App de Desenho",
@@ -55,6 +56,7 @@
         polygonSides: "Lados: ",
         undo: "Desfazer",
         redo: "Refazer",
+        resetZoom: "Zoom 100%",
       },
     };
   
