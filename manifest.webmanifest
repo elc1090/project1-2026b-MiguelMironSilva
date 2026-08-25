@@ -1,7 +1,7 @@
 {
-    "name": "Drawing Board - Bodi ya Kuchora",
+    "name": "Drawing Board - Prancheta de desenho",
     "short_name": "DrawBoard",
-    "description": "A simple offline drawing app for classrooms / Programu rahisi ya kuchora kwa wanafunzi.",
+    "description": "A simple offline drawing app for classrooms / Um aplicativo de desenho offline simples para salas de aula.",
     "start_url": "./index.html",
     "scope": "./",
     "display": "standalone",
