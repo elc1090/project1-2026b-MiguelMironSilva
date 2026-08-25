@@ -1,4 +1,5 @@
 const canvas = document.querySelector("canvas"),
+drawingBoard = document.querySelector(".drawing-board"),
 toolBtns = document.querySelectorAll(".tool"),
 fillColor = document.querySelector("#fill-color"),
 sizeSlider = document.querySelector("#size-slider"),
@@ -17,6 +18,7 @@ hsvPreview = document.querySelector("#hsv-preview"),
 resetColor = document.querySelector("#reset-color"),
 undoBtn = document.querySelector(".undo-btn"),
 redoBtn = document.querySelector(".redo-btn"),
+resetZoomBtn = document.querySelector(".reset-zoom"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
 ctx = canvas.getContext("2d");
@@ -34,8 +36,15 @@ let randomPoints = [];
 //Suporte para undo e redo
 let undoStack = [];
 let redoStack = [];
-
 const MAX_HISTORY = 20;
+
+//Suporte para zoom
+let zoomLevel = 1;
+let originalDisplayWidth;
+let originalDisplayHeight;
+const MIN_ZOOM = 0.25;
+const MAX_ZOOM = 4;
+const ZOOM_STEP = 0.1;
 
 const setCanvasBackground = () => {
     ctx.fillStyle = "#fff";
@@ -75,9 +84,12 @@ const restoreState = (state) => {
     hasDrawn = state.hasDrawn;
 };
 
+//Inicializa tamanho do display
 window.addEventListener("load", () => {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+    originalDisplayWidth = canvas.offsetWidth;
+    originalDisplayHeight = canvas.offsetHeight;
     setCanvasBackground();
 });
 
@@ -191,6 +203,33 @@ const redo = () => {
     updateHistoryButtons();
 };
 
+//Implementação do zoom
+const applyZoom = () => {
+    canvas.style.width = `${originalDisplayWidth * zoomLevel}px`;
+    canvas.style.height = `${originalDisplayHeight * zoomLevel}px`;
+    resetZoomBtn.textContent = `Zoom ${Math.round(zoomLevel * 100)}%`; //display do nível de zoom
+};
+
+//Botão para resetar o zoom
+const resetZoom = () => {
+    zoomLevel = 1;
+    applyZoom();
+    drawingBoard.scrollLeft = 0;
+    drawingBoard.scrollTop = 0;
+};
+
+//Getter das coordenadas
+const getCanvasCoordinates = (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    return {
+        offsetX: (e.clientX - rect.left) * scaleX,
+        offsetY: (e.clientY - rect.top) * scaleY
+    };
+};
+
+//Desenha retângulo
 const drawRect = (e) => {
     if(!fillColor.checked) {
         return ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
@@ -198,6 +237,7 @@ const drawRect = (e) => {
     ctx.fillRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
 };
 
+//Desenha círculo
 const drawCircle = (e) => {
     ctx.beginPath();
     let radius = Math.sqrt(Math.pow((prevMouseX - e.offsetX), 2) + Math.pow((prevMouseY - e.offsetY), 2));
@@ -205,6 +245,7 @@ const drawCircle = (e) => {
     fillColor.checked ? ctx.fill() : ctx.stroke();
 };
 
+//Desenha triângulo
 const drawTriangle = (e) => {
     ctx.beginPath();
     ctx.moveTo(prevMouseX, prevMouseY);
@@ -227,17 +268,10 @@ const drawPolygon = (e) => {
     const sides = Math.min(20, Math.max(3, Number(polygonSidesInput.value) || 5));
     const centerX = prevMouseX;
     const centerY = prevMouseY;
-
-    const radius = Math.sqrt(
-        Math.pow(e.offsetX - centerX, 2) +
-        Math.pow(e.offsetY - centerY, 2)
+    const radius = Math.sqrt( Math.pow(e.offsetX - centerX, 2) +  Math.pow(e.offsetY - centerY, 2)
     );
-
-    const angleStep =
-        (Math.PI * 2) / sides;
-
+    const angleStep = (Math.PI * 2) / sides;
     ctx.beginPath();
-
     for(let i = 0; i < sides; i++) {
         const angle = -Math.PI / 2 + i * angleStep;
         const x = centerX + radius * Math.cos(angle);
@@ -249,9 +283,7 @@ const drawPolygon = (e) => {
             ctx.lineTo(x, y);
         }
     }
-
     ctx.closePath();
-
     fillColor.checked ? ctx.fill() : ctx.stroke();
 };
 
@@ -259,8 +291,8 @@ const startDraw = (e) => {
     saveState(); //Salva o desenho
     isDrawing = true;
     hasDrawn = true; // Set to true when user starts drawing
-    prevMouseX = e.offsetX;
-    prevMouseY = e.offsetY;
+    prevMouseX = point.offsetX; //modificado para usar "point" ao invés de "e"
+    prevMouseY = point.offsetY; //necessário para o escalonamento
     ctx.beginPath();
     ctx.lineWidth = brushWidth;
     ctx.strokeStyle = selectedColor;
@@ -308,9 +340,11 @@ const drawRandom = (e) => {
 const drawing = (e) => {
     if(!isDrawing) return;
 
+    const point = getCanvasCoordinates(e); //conversão de "e" para "points"
+
     //Spray tem que ficar antes do "putImageData" para poder acumular propriamente
     if(selectedTool === "spray") {
-        sprayPaint(e);
+        sprayPaint(point);
         return;
     }
         
@@ -318,22 +352,22 @@ const drawing = (e) => {
 
     if(selectedTool === "brush" || selectedTool === "eraser") {
         ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
-        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.lineTo(point.offsetX, point.offsetY);
         ctx.stroke();
     } else if(selectedTool === "rectangle"){
-        drawRect(e);
+        drawRect(point);
     } else if(selectedTool === "circle"){
-        drawCircle(e);
+        drawCircle(point);
     } else if(selectedTool === "triangle"){
-        drawTriangle(e);
+        drawTriangle(point);
     } else if(selectedTool === "line") {
-        drawLine(e);
+        drawLine(point);
     } else if(selectedTool === "random-draw") {
-        drawRandom(e);
+        drawRandom(point);
     } else if(selectedTool === "polygon") {
-        drawPolygon(e);
+        drawPolygon(point);
     } else {
-        drawTriangle(e);
+        drawTriangle(point);
     }
 };
 
@@ -347,6 +381,7 @@ toolBtns.forEach(btn => {
 
 sizeSlider.addEventListener("change", () => brushWidth = sizeSlider.value);
 
+//Controle dos botôes que não sejam do HSV
 presetColorBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         document.querySelector(".colors .selected")?.classList.remove("selected");
@@ -355,6 +390,25 @@ presetColorBtns.forEach(btn => {
         hsvPicker.classList.remove("visible");
     });
 });
+
+//Controle para a roda do mouse + ctrl para zoom
+drawingBoard.addEventListener("wheel", (e) => {
+    if(!e.ctrlKey) return;
+    e.preventDefault();
+    if(e.deltaY < 0) {
+        zoomLevel += ZOOM_STEP;
+    } else {
+        zoomLevel -= ZOOM_STEP;
+    }
+    zoomLevel = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoomLevel));
+    applyZoom();
+}, { passive: false });
+
+//Controle para resetar o zoom
+resetZoomBtn.addEventListener(
+    "click",
+    resetZoom
+);
 
 //Conecta todos os componentes do selecionador de HSV
 hueSlider.addEventListener("input", updateHSVColor);
@@ -376,14 +430,11 @@ customColorButton.addEventListener("click", (e) => {
 
 //Reseta para o azul original com o botão Reset
 resetColor.addEventListener("click", () => {
-    const defaultColor =
-        customColorButton.dataset.defaultColor;
+    const defaultColor = customColorButton.dataset.defaultColor;
 
-    customColorButton.style.backgroundColor =
-        defaultColor;
+    customColorButton.style.backgroundColor = defaultColor;
 
-    hsvPreview.style.backgroundColor =
-        defaultColor;
+    hsvPreview.style.backgroundColor = defaultColor;
 
     selectedColor = defaultColor;
 
@@ -399,6 +450,7 @@ resetColor.addEventListener("click", () => {
     customColorButton.classList.add("selected");
 });
 
+//Limpa  a tela
 clearCanvas.addEventListener("click", () => {
     saveState(); //Salva desenho
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -407,6 +459,7 @@ clearCanvas.addEventListener("click", () => {
     updateHistoryButtons(); //Vê se os botôes de undo e redo estão habilitados ou não
 });
 
+//Salva a imagem
 saveImg.addEventListener("click", () => {
     if (!hasDrawn) { // Prevent saving if nothing has been drawn
         alert("You cannot save an empty board!");
