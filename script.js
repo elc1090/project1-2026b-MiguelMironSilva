@@ -14,6 +14,8 @@ saturationValue = document.querySelector("#saturation-value"),
 valueValue = document.querySelector("#value-value"),
 hsvPreview = document.querySelector("#hsv-preview"),
 resetColor = document.querySelector("#reset-color"),
+undoBtn = document.querySelector(".undo-btn"),
+redoBtn = document.querySelector(".redo-btn"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
 ctx = canvas.getContext("2d");
@@ -28,10 +30,48 @@ selectedColor = "#000";
 //Armazenamento de pontos aleatórios
 let randomPoints = [];
 
+//Suporte para undo e redo
+let undoStack = [];
+let redoStack = [];
+
+const MAX_HISTORY = 20;
+
 const setCanvasBackground = () => {
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = selectedColor;
+};
+
+//Captura o canvas de agora
+const getCanvasState = () => {
+    return {
+        imageData: ctx.getImageData(0,0,canvas.width,canvas.height),
+        hasDrawn: hasDrawn
+    };
+};
+
+//Botões de undo e redo desabilitados por padrão
+const updateHistoryButtons = () => {
+    undoBtn.disabled = undoStack.length === 0;
+    redoBtn.disabled = redoStack.length === 0;
+};
+
+//Salva a captura
+const saveState = () => {
+    undoStack.push(getCanvasState());
+
+    if(undoStack.length > MAX_HISTORY) {
+        undoStack.shift();
+    }
+    //invalida o redo com uma nova ação
+    redoStack = [];
+    updateHistoryButtons();
+};
+
+//Restaura captura prévia
+const restoreState = (state) => {
+    ctx.putImageData(state.imageData, 0, 0);
+    hasDrawn = state.hasDrawn;
 };
 
 window.addEventListener("load", () => {
@@ -132,6 +172,24 @@ const updateHSVColor = () => {
     customColorButton.classList.add("selected");
 };
 
+//Implementação do undo
+const undo = () => {
+    if(undoStack.length === 0) return;
+    redoStack.push(getCanvasState());
+    const previousState = undoStack.pop();
+    restoreState(previousState);
+    updateHistoryButtons();
+};
+
+//Implementação do redo
+const redo = () => {
+    if(redoStack.length === 0) return;
+    undoStack.push(getCanvasState());
+    const nextState = redoStack.pop();
+    restoreState(nextState);
+    updateHistoryButtons();
+};
+
 const drawRect = (e) => {
     if(!fillColor.checked) {
         return ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
@@ -197,6 +255,7 @@ const drawPolygon = (e) => {
 };
 
 const startDraw = (e) => {
+    saveState(); //Salva o desenho
     isDrawing = true;
     hasDrawn = true; // Set to true when user starts drawing
     prevMouseX = e.offsetX;
@@ -217,18 +276,13 @@ const sprayPaint = (e) => {
     //Spray fica mais amplo e denso com amplitude do pincel maior
     const sprayRadius = brushWidth * 1.5;
     const density = brushWidth * 3;
-
     ctx.fillStyle = selectedColor;
-
     for(let i = 0; i < density; i++) {
         const angle = Math.random() * Math.PI * 2;
-
         // sqrt() uniformiza melhor a distribuição do spray
         const distance = Math.sqrt(Math.random()) * sprayRadius;
-
         const x = e.offsetX + Math.cos(angle) * distance;
         const y = e.offsetY + Math.sin(angle) * distance;
-
         ctx.fillRect(x, y, 1.5, 1.5);
     }
 };
@@ -236,33 +290,18 @@ const sprayPaint = (e) => {
 const drawRandom = (e) => {
     const width = e.offsetX - prevMouseX;
     const height = e.offsetY - prevMouseY;
-
     ctx.beginPath();
-
-    const firstX =
-        prevMouseX + randomPoints[0].x * width;
-
-    const firstY =
-        prevMouseY + randomPoints[0].y * height;
-
+    const firstX = prevMouseX + randomPoints[0].x * width;
+    const firstY = prevMouseY + randomPoints[0].y * height;
     ctx.moveTo(firstX, firstY);
 
     for(let i = 1; i < randomPoints.length; i++) {
-
-        const x =
-            prevMouseX + randomPoints[i].x * width;
-
-        const y =
-            prevMouseY + randomPoints[i].y * height;
-
+        const x = prevMouseX + randomPoints[i].x * width;
+        const y = prevMouseY + randomPoints[i].y * height;
         ctx.lineTo(x, y);
     }
-
     ctx.closePath();
-
-    fillColor.checked
-        ? ctx.fill()
-        : ctx.stroke();
+    fillColor.checked ? ctx.fill() : ctx.stroke();
 };
 
 const drawing = (e) => {
@@ -321,6 +360,10 @@ hueSlider.addEventListener("input", updateHSVColor);
 saturationSlider.addEventListener("input", updateHSVColor);
 valueSlider.addEventListener("input", updateHSVColor);
 
+//Conecta botôes de undo e redo
+undoBtn.addEventListener("click", undo);
+redoBtn.addEventListener("click", redo);
+
 //Abre o painel de HSV
 customColorButton.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -356,9 +399,11 @@ resetColor.addEventListener("click", () => {
 });
 
 clearCanvas.addEventListener("click", () => {
+    saveState(); //Salva desenho
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setCanvasBackground();
     hasDrawn = false; // Reset the flag when canvas is cleared
+    updateHistoryButtons(); //Vê se os botôes de undo e redo estão habilitados ou não
 });
 
 saveImg.addEventListener("click", () => {
