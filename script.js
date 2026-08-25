@@ -184,7 +184,7 @@ const drawing = (e) => {
         drawTriangle(e);
     } else if(selectedTool === "line") {
         drawLine(e);
-    } else if(selectedTool === "randomDraw") {
+    } else if(selectedTool === "random-Draw") {
         drawRandom(e);
     } else {
         drawTriangle(e);
