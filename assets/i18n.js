@@ -33,6 +33,9 @@
         redo: "Redo",
         resetZoom: "Zoom 100%",
         selection: "Selection",
+        rotation: "Rotation",
+        apply: "Apply",
+        cancel: "Cancel",
       },
       pt: {
         pageTitle: "App de Desenho",
@@ -59,6 +62,9 @@
         redo: "Refazer",
         resetZoom: "Zoom 100%",
         selection: "Seleção",
+        rotation: "Rotação",
+        apply: "Aplicar",
+        cancel: "Cancelar",
       },
     };
   
