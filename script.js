@@ -47,22 +47,19 @@ const generateRandomPoints = () => {
     randomPoints = [];
 
     //entre cinco e dez vértices
-    const pointCount =
-        Math.floor(Math.random() * 6) + 5;
-
+    const pointCount = Math.floor(Math.random() * 11) + 4;
+    const rotation = Math.random() * Math.PI * 2;
     for(let i = 0; i < pointCount; i++) {
-
-        const baseAngle =
-            (Math.PI * 2 * i) / pointCount;
-
-        const angleVariation =
-            (Math.random() - 0.5) * 0.3;
-
-        const angle =
-            baseAngle + angleVariation;
-
-        const radius =
-            0.3 + Math.random() * 0.2;
+        const baseAngle = (Math.PI * 2 * i) / pointCount;
+        const angleVariation = (Math.random() - 0.5) * 0.8;
+        const angle = baseAngle + angleVariation + rotation;
+        
+        let radius;  //puxa o raio para dentro
+        if(Math.random() < 0.2) { 
+            radius = 0.08 + Math.random() * 0.15;
+        } else {
+            radius = 0.25 + Math.random() * 0.3;
+        }
 
         randomPoints.push({
             x: 0.5 + Math.cos(angle) * radius,
@@ -77,9 +74,7 @@ const hsvToRgb = (h, s, v) => {
     v /= 100;
 
     const c = v * s;
-    const x = c * (
-        1 - Math.abs(((h / 60) % 2) - 1)
-    );
+    const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
     const m = v - c;
 
     let r = 0;
