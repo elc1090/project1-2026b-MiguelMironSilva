@@ -4,7 +4,6 @@ toolBtns = document.querySelectorAll(".tool"),
 fillColor = document.querySelector("#fill-color"),
 sizeSlider = document.querySelector("#size-slider"),
 polygonSidesInput = document.querySelector("#polygon-sides"),
-//esquema velho de ColorBtns retirado
 presetColorBtns = document.querySelectorAll(".colors .option:not(.custom-color)"),
 customColorButton = document.querySelector("#custom-color-button"),
 hsvPicker = document.querySelector("#hsv-picker"),
@@ -18,9 +17,9 @@ hsvPreview = document.querySelector("#hsv-preview"),
 resetColor = document.querySelector("#reset-color"),
 undoBtn = document.querySelector(".undo-btn"),
 redoBtn = document.querySelector(".redo-btn"),
-const rotationInput = document.querySelector("#selection-rotation");
-const applySelectionBtn = document.querySelector(".apply-selection");
-const cancelSelectionBtn = document.querySelector(".cancel-selection");
+rotationInput = document.querySelector("#selection-rotation"),
+applySelectionBtn = document.querySelector(".apply-selection"),
+cancelSelectionBtn = document.querySelector(".cancel-selection"),
 resetZoomBtn = document.querySelector(".reset-zoom"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
@@ -821,7 +820,7 @@ saveImg.addEventListener("click", () => {
 
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
-canvas.addEventListener("mouseup", () (e) => { //integra com seleção
+canvas.addEventListener("mouseup", (e) => { //integra com seleção
         const point = getCanvasCoordinates(e);
         if(isSelecting) {
             finishSelection(point);
