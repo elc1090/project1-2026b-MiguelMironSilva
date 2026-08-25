@@ -226,6 +226,9 @@ const applyZoom = () => {
     canvas.style.width = `${originalDisplayWidth * zoomLevel}px`;
     canvas.style.height = `${originalDisplayHeight * zoomLevel}px`;
     resetZoomBtn.textContent = `Zoom ${Math.round(zoomLevel * 100)}%`; //display do nível de zoom
+    if(selectionActive) {
+        renderSelection(); //handler de seleção fica ativo em todas as escalas
+    }
 };
 
 //Botão para resetar o zoom
@@ -472,6 +475,7 @@ const pushUndoState = (state) => {
 //Reseta o estado da transformação
 const endSelectionSession = () => {
     selectionActive = false;
+    isSelecting = false;
     selectionMode = null;
     selectionCanvas = null;
     selectionBackground = null;
@@ -572,6 +576,7 @@ const startDraw = (e) => {
             if(startSelectionTransform(point)) {
                 return;
             }
+            commitSelection(); //clicar fora da caixa comita ela
         }
         startSelection(point);
         return;
@@ -743,7 +748,12 @@ undoBtn.addEventListener("click", () => {
         }
         undo();
     });
-redoBtn.addEventListener("click", redo);
+redoBtn.addEventListener("click", () => {
+    if(selectionActive) { //não faz redo durante uma seleção ativa
+        return;
+    }
+    redo();
+});
 
 //Abre o painel de HSV
 customColorButton.addEventListener("click", (e) => {
@@ -828,4 +838,11 @@ canvas.addEventListener("mouseup", (e) => { //integra com seleção
         selectionMode = null;
         isDrawing = false;
     });
-canvas.addEventListener("mouseleave", () => { isDrawing = false; });
+canvas.addEventListener("mouseleave", () => {
+    isDrawing = false;
+    selectionMode = null;
+    if(isSelecting) {
+        ctx.putImageData(snapshot, 0, 0);
+        isSelecting = false;
+    }
+});
