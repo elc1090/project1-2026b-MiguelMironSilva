@@ -45,7 +45,7 @@ let zoomLevel = 1;
 let originalDisplayWidth;
 let originalDisplayHeight;
 const MIN_ZOOM = 0.25;
-const MAX_ZOOM = 4;
+const MAX_ZOOM = 1;
 const ZOOM_STEP = 0.1;
 
 //Suporte para seleção, movimento, escalonamento e rotação
