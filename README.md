@@ -6,11 +6,11 @@ Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawin
 
 ## Exigências do cliente
 
-- Implementar a feature de desenho de polígonos
-- Poder definir a resolução do quadro
-- Ter um color picker que possibilita escolher qualquer cor em HSV
-- Ferramenta de Spray
-- Ferramenta de seleção que possibilita mover, rotacionar, escalar partes da imagem
+- Implementar a feature de desenho de polígonos (Fácil)
+- Poder definir a resolução do quadro (Moderado)
+- Ter um color picker que possibilita escolher qualquer cor em HSV (Moderadamente fácil)
+- Ferramenta de Spray (Fácil)
+- Ferramenta de seleção que possibilita mover, rotacionar, escalar partes da imagem (Difícil)
 
 ## Melhoras adicionais
 
@@ -22,9 +22,9 @@ Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawin
 ### Programa Original
 - https://github.com/jimmyurl/drawing-board
 ### Imagem de fundo
-https://www.magnific.com/vectors/techno-lines-background
+- https://www.magnific.com/vectors/techno-lines-background
 ### Novos ícones svg
-https://claude.ai/
+- https://claude.ai/
 
 ## E-mail para contato
 
