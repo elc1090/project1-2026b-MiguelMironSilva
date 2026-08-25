@@ -2,6 +2,7 @@ const canvas = document.querySelector("canvas"),
 toolBtns = document.querySelectorAll(".tool"),
 fillColor = document.querySelector("#fill-color"),
 sizeSlider = document.querySelector("#size-slider"),
+polygonSidesInput = document.querySelector("#polygon-sides"),
 //esquema velho de ColorBtns retirado
 presetColorBtns = document.querySelectorAll(".colors .option:not(.custom-color)"),
 customColorButton = document.querySelector("#custom-color-button"),
@@ -223,7 +224,7 @@ const drawLine = (e) => {
 
 //Implementação da função geradora de polígono
 const drawPolygon = (e) => {
-    const sides = Math.max(3, Number(polygonSidesInput.value));
+    const sides = Math.min(20, Math.max(3, Number(polygonSidesInput.value) || 5));
     const centerX = prevMouseX;
     const centerY = prevMouseY;
 
