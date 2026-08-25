@@ -260,7 +260,7 @@ const drawing = (e) => {
         drawTriangle(e);
     } else if(selectedTool === "line") {
         drawLine(e);
-    } else if(selectedTool === "random-dfraw") {
+    } else if(selectedTool === "random-draw") {
         drawRandom(e);
     } else {
         drawTriangle(e);
