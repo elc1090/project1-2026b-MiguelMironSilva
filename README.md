@@ -70,6 +70,70 @@ Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawin
    
    A função de zoom também foi complementada com `pushUndoState`, que permite que as ações da caixa de seleção sejam tratadas como uma única ação de desfazer, utilizando o estado anterior ao início de toda a sessão de seleção.
 
+## Code pieces
+
+### Contextualizador do HTML5 Canvas
+
+```
+ctx = canvas.getContext("2d");
+````
+
+### Conversão de HSV para RGB
+
+```
+const hsvToRgb = (h, s, v) => {
+    s /= 100;
+    v /= 100;
+
+    const c = v * s;
+    const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+    const m = v - c;
+
+    let r = 0;
+    let g = 0;
+    let b = 0;
+
+    if(h < 60) {
+        r = c;
+        g = x;
+    } else if(h < 120) {
+        r = x;
+        g = c;
+    } else if(h < 180) {
+        g = c;
+        b = x;
+    } else if(h < 240) {
+        g = x;
+        b = c;
+    } else if(h < 300) {
+        r = x;
+        b = c;
+    } else {
+        r = c;
+        b = x;
+    }
+
+    r = Math.round((r + m) * 255);
+    g = Math.round((g + m) * 255);
+    b = Math.round((b + m) * 255);
+
+    return `rgb(${r}, ${g}, ${b})`;
+};
+```
+
+### Aplicação do Zoom
+
+```
+const applyZoom = () => {
+    canvas.style.width = `${originalDisplayWidth * zoomLevel}px`;
+    canvas.style.height = `${originalDisplayHeight * zoomLevel}px`;
+    resetZoomBtn.textContent = `Zoom ${Math.round(zoomLevel * 100)}%`; //display do nível de zoom
+    if(selectionActive) {
+        renderSelection(); //handler de seleção fica ativo em todas as escalas
+    }
+};
+```
+
 ## Fontes
 
 ### Programa Original
