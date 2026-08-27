@@ -22,6 +22,10 @@ Remake do webapp open-source "drawing-board" (https://github.com/jimmyurl/drawin
 
 - Subdividir script.js em vários  módulos menores
 
+## Processo de desenvolvimento
+
+De início, foi feito um processo de levantamento e * *code comprehension* * de cada parte do programa original. Os arquivos `pwa.js` e `pwa.css`, por lidarem com o funcionamento e estilização respectivamente da * *Progressive Web App Functionality* * do webapp, lidando com o funcionamento e estilização do botão `Install App/Instalar App` e com o registro de `sw.js` para habilitar o funcionamento offline do programa, permaneceram completamente intocados durante todo o processo de modificação dele. Os arquivos `sw.js` e `manifest.webmanifest` não tiveram alterações na sua lógica interna, só sendo editados para incluir os itens adicionados durante o desenvolvimento no webcache e para mudar todos os trechos linguísticos do programa de Suaíli para Português, respectivamente.
+
 ## Fontes
 
 ### Programa Original
